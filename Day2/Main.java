@@ -12,9 +12,15 @@ public class Main {
         FileReader fr = new FileReader(f);
         BufferedReader bfr = new BufferedReader(fr);
 
+        int score = 0;
+
+        // partOne(bfr, score);
+        // partTwo(bfr, score);
+    }
+
+    private static void partOne(BufferedReader bfr, int score) throws IOException {
         // initializations
         String line = bfr.readLine();
-        int score = 0;
 
         // loop through input
         while (line != null) {
@@ -24,24 +30,83 @@ public class Main {
             if (moves[0].charAt(0) == 'C' && convertToABC(moves[1].charAt(0)) == 'A') {
                 score += ResultEnum.WIN.value;
                 score += convertToScore(moves[1].charAt(0));
-                // System.out.println("special win. score += + " + ResultEnum.WIN.value + " + " + convertToScore(moves[1].charAt(0)) + " = " + score);
+
+            // special lose case
+            } else if (moves[0].charAt(0) == 'A' && convertToABC(moves[1].charAt(0)) == 'C') {
+                score += convertToScore(moves[1].charAt(0));
 
             // win
             } else if (moves[0].charAt(0) < convertToABC(moves[1].charAt(0))) {
                 score += ResultEnum.WIN.value;
                 score += convertToScore(moves[1].charAt(0));
-                // System.out.println("win. score += + " + ResultEnum.WIN.value + " + " + convertToScore(moves[1].charAt(0)) + " = " + score);
 
             // draw
             } else if (moves[0].charAt(0) == convertToABC(moves[1].charAt(0))) {
                 score += ResultEnum.DRAW.value;
                 score += convertToScore(moves[1].charAt(0));
-                // System.out.println("draw. score += + " + ResultEnum.DRAW.value + " + " + convertToScore(moves[1].charAt(0)) + " = " + score);
             
             // lose
             } else {
                 score += convertToScore(moves[1].charAt(0));
-                // System.out.println("lose. score += + 0 + " + convertToScore(moves[1].charAt(0)) + " = " + score);
+            }
+
+            line = bfr.readLine();
+        }
+
+        System.out.println("Total score is " + score + ".");
+    }
+
+    private static void partTwo(BufferedReader bfr, int score) throws IOException {
+        // initializations
+        String line = bfr.readLine();
+
+        // loop through input
+        while (line != null) {
+            String[] moves = line.split(" ");
+
+            switch (moves[1].charAt(0)) {
+                case 'X':
+                    switch (moves[0].charAt(0)) {
+                        case 'A':
+                            score += GameEnum.C.value;
+                            break;
+                        case 'B':
+                            score += GameEnum.A.value;
+                            break;
+                        case 'C':
+                            score += GameEnum.B.value;
+                            break;
+                    }
+                    break;
+                case 'Y':
+                    switch (moves[0].charAt(0)) {
+                        case 'A':
+                            
+                            score += GameEnum.A.value;
+                            break;
+                        case 'B':
+                            score += GameEnum.B.value;
+                            break;
+                        case 'C':
+                            score += GameEnum.C.value;
+                            break;
+                    }
+                    score += ResultEnum.DRAW.value;
+                    break;
+                case 'Z':
+                    switch (moves[0].charAt(0)) {
+                        case 'A':
+                            score += GameEnum.B.value;
+                            break;
+                        case 'B':
+                            score += GameEnum.C.value;
+                            break;
+                        case 'C':
+                            score += GameEnum.A.value;
+                            break;
+                    }
+                    score += ResultEnum.WIN.value;
+                    break;
             }
 
             line = bfr.readLine();
