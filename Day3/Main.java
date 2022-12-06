@@ -51,7 +51,43 @@ public class Main {
         System.out.println("The sum of priorities of items in each compartment of each rucksack is " + totalPriority + ".");
     }
 
-    private static void partTwo(BufferedReader bfr) {
+    private static void partTwo(BufferedReader bfr) throws IOException {
+        int totalPriority = 0;
 
+        String line = bfr.readLine();
+        String lineTwo = bfr.readLine();
+        String lineThree = bfr.readLine();
+
+        while (line != null && lineTwo != null && lineThree != null) {
+            boolean shouldBreak = false;
+            for (int i = 0; i < line.length(); i++) {
+                for (int j = 0; j < lineTwo.length(); j++) {
+                    if (line.charAt(i) == lineTwo.charAt(j)) {
+                        for (int k = 0; k < lineThree.length(); k++) {
+                            if (lineTwo.charAt(j) == lineThree.charAt(k)) {
+                                char commonChar = lineThree.charAt(k);
+
+                                if (commonChar < 97) {
+                                    totalPriority += commonChar - 64 + 26;
+                                } else {
+                                    totalPriority += commonChar - 96;
+                                }
+
+                                shouldBreak = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (shouldBreak) break;
+                }
+                if (shouldBreak) break;
+            }
+
+            line = bfr.readLine();
+            lineTwo = bfr.readLine();
+            lineThree = bfr.readLine();
+        }
+
+        System.out.println("The sum of priorities of each group is " + totalPriority + ".");
     }
 }
