@@ -85,11 +85,8 @@ public class Main {
 
                         stackArray[stackArrayIndex] = newStack;
 
-                        System.out.println("Pushing " + line.charAt(i) + " to " + (stackArrayIndex + 1));
-
                     } else {
                         stackArray[stackArrayIndex].push(line.charAt(i));
-                        System.out.println("Pushing " + line.charAt(i) + " to " + (stackArrayIndex + 1));
                     }
 
                     stackArrayIndex++;
@@ -104,21 +101,17 @@ public class Main {
             line = bfr.readLine();
         }
 
-        for (int i = 0; i < stackArray.length; i++) {
-            System.out.println("Stack: " + (i + 1) + " " + stackArray[i]);
-        }
-
         bfr.readLine();
         line = bfr.readLine();
 
+        System.out.println();
         while (line != null) {
             String[] parts = line.split(" ");
-            for (int i = 0; i < Integer.parseInt(parts[1]); i++) {
-                System.out.println("Stack from: " + stackArray[Integer.parseInt(parts[3]) - 1]);
-                System.out.println("Stack to: " + stackArray[Integer.parseInt(parts[5]) - 1]);
 
-                stackArray[Integer.parseInt(parts[5]) - 1]
-                        .addLast(stackArray[Integer.parseInt(parts[3]) - 1].pollLast());
+            int index = (stackArray[Integer.parseInt(parts[3]) - 1].size() - Integer.parseInt(parts[1]));
+
+            for (int i = 0; i < Integer.parseInt(parts[1]); i++) {
+                stackArray[Integer.parseInt(parts[5]) - 1].addLast(stackArray[Integer.parseInt(parts[3]) - 1].remove(index));
             }
 
             line = bfr.readLine();
