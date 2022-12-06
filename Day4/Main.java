@@ -15,7 +15,8 @@ public class Main {
 
         int overlap = 0;
 
-        partOne(bfr, overlap);
+        // partOne(bfr, overlap);
+        partTwo(bfr, overlap);
     }
 
     private static void partOne(BufferedReader bfr, int overlap) throws IOException {
@@ -29,6 +30,26 @@ public class Main {
 
             if (convertToInt(rangeOne[0]) >= convertToInt(rangeTwo[0]) && convertToInt(rangeOne[1]) <= convertToInt(rangeTwo[1])
             || convertToInt(rangeOne[0]) <= convertToInt(rangeTwo[0]) && convertToInt(rangeOne[1]) >= convertToInt(rangeTwo[1])) {
+                overlap++;
+            }
+
+            line = bfr.readLine();
+        }
+
+        System.out.println("The number of complete overlaps is " + overlap + ".");
+    }
+
+    private static void partTwo(BufferedReader bfr, int overlap) throws IOException {
+        String line = bfr.readLine();
+
+        while (line != null) {
+            String[] assignments = line.split(",");
+
+            String[] rangeOne = assignments[0].split("-");
+            String[] rangeTwo = assignments[1].split("-");
+
+            if (convertToInt(rangeOne[0]) >= convertToInt(rangeTwo[0]) && convertToInt(rangeOne[0]) <= convertToInt(rangeTwo[1])
+            || convertToInt(rangeOne[0]) <= convertToInt(rangeTwo[0]) && convertToInt(rangeOne[1]) >= convertToInt(rangeTwo[0])) {
                 overlap++;
             }
 
