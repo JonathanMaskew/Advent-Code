@@ -15,10 +15,11 @@ public class Main {
 
         LinkedList<Character>[] stackArray = null;
 
-        // partOne(bfr, stackArray);
-        partTwo(bfr, stackArray);
+        partOne(bfr, stackArray);
+        // partTwo(bfr, stackArray);
     }
 
+    // Answer: PTWLTDSJV
     private static void partOne(BufferedReader bfr, LinkedList<Character>[] stackArray) throws IOException {
         String line = bfr.readLine();
         stackArray = new LinkedList[line.length() / 4 + 1];
@@ -69,6 +70,7 @@ public class Main {
         }
     }
 
+    // Anser: WZMFVGGZP
     private static void partTwo(BufferedReader bfr, LinkedList<Character>[] stackArray) throws IOException {
         String line = bfr.readLine();
         stackArray = new LinkedList[line.length() / 4 + 1];
