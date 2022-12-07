@@ -13,46 +13,81 @@ public class Main {
         FileReader fr = new FileReader(f);
         BufferedReader bfr = new BufferedReader(fr);
 
-        partOne(bfr);
-        // partTwo(bfr);
+        // partOne(bfr);
+        partTwo(bfr);
     }
 
+    // Answer: 1707
     private static void partOne(BufferedReader bfr) throws IOException {
         String line = bfr.readLine();
 
         int indexInString = 1;
-        while (line != null) {
-            ArrayList<Character> tempString = new ArrayList<>();
-            tempString.add(line.charAt(0));
+        int indexOfStart = 0;
 
-            int length = 0;
-            while (length <= 4) {
-                System.out.println(tempString);
-                boolean append = true;
-                for (int i = 0; i < tempString.size(); i++) {
-                    if (line.charAt(indexInString) == tempString.get(i)) {
-                        tempString.clear();
-                        length = 0;
-                        append = false;
-                        break;
+        ArrayList<Character> tempString = new ArrayList<>();
+        tempString.add(line.charAt(0));
 
-                    }
-                }
+        int length = 1;
 
-                if (append) {
-                    tempString.add(line.charAt(indexInString));
-                    indexInString++;
-                    length++;
+        while (length < 4) {
+            boolean append = true;
+
+            for (int i = 0; i < tempString.size(); i++) {
+                if (line.charAt(indexInString) == tempString.get(i)) {
+                    tempString.clear();
+                    length = 0;
+                    append = false;
+                    indexInString = indexOfStart + 1;
+                    indexOfStart = indexInString;
+                    break;
                 }
             }
 
-            line = bfr.readLine();
+            if (append) {
+                tempString.add(line.charAt(indexInString));
+                indexInString++;
+                length++;
+                System.out.println(tempString);
+            }
         }
 
-        System.out.println((indexInString - 1) + " chars processed before 4 unique chars appeared.");
+        System.out.println((indexInString) + " chars processed before 4 unique chars appeared.");
     }
 
-    private static void partTwo() {
+    // Answer: 3697
+    private static void partTwo(BufferedReader bfr) throws IOException {
+        String line = bfr.readLine();
 
+        int indexInString = 1;
+        int indexOfStart = 0;
+
+        ArrayList<Character> tempString = new ArrayList<>();
+        tempString.add(line.charAt(0));
+        
+        int length = 1;
+
+        while (length < 14) {
+            boolean append = true;
+
+            for (int i = 0; i < tempString.size(); i++) {
+                if (line.charAt(indexInString) == tempString.get(i)) {
+                    tempString.clear();
+                    length = 0;
+                    append = false;
+                    indexInString = indexOfStart + 1;
+                    indexOfStart = indexInString;
+                    break;
+                }
+            }
+
+            if (append) {
+                tempString.add(line.charAt(indexInString));
+                indexInString++;
+                length++;
+                System.out.println(tempString);
+            }
+        }
+
+        System.out.println((indexInString) + " chars processed before 14 unique chars appeared.");
     }
 }
