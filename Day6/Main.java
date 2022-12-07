@@ -47,7 +47,6 @@ public class Main {
                 tempString.add(line.charAt(indexInString));
                 indexInString++;
                 length++;
-                System.out.println(tempString);
             }
         }
 
@@ -84,7 +83,6 @@ public class Main {
                 tempString.add(line.charAt(indexInString));
                 indexInString++;
                 length++;
-                System.out.println(tempString);
             }
         }
 
