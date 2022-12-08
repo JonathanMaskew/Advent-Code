@@ -1,0 +1,9 @@
+$ cd /
+dir a
+$ cd a
+dir b
+$ cd b
+$ cd ..
+$ cd b
+$ cd ..
+$ cd ..
