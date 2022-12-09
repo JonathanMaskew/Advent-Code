@@ -15,7 +15,7 @@ public class Main {
         Scanner s = new Scanner(f);
 
         partOne(s);
-        // partTwo();
+        // partTwo(s);
     }
 
     // Answer: 1491614
@@ -37,7 +37,7 @@ public class Main {
                         currNode = prevNodes.pop();
 
                     } else {
-                        Node searchResult = searchTree(lineComp[2], currNode);
+                        Node searchResult = findChildDir(lineComp[2], currNode);
                         if (searchResult != null) {
                             System.out.println("Found " + searchResult.name + " in current tree.");
                             prevNodes.push(currNode);
@@ -63,10 +63,25 @@ public class Main {
 
         adjustDirectorySizes(start);
         printTotal();
+        partTwo(s, start);
     }
 
-    private static void partTwo() {
+    private static void partTwo(Scanner s, Node start) {
+        int needToFree = 30000000 - (70000000 - start.size);
+        System.out.println("need to free " + needToFree);
 
+        ArrayList<Node> possibleToDelete = new ArrayList<>();
+        findPossibleDelDirs(needToFree, start, possibleToDelete);
+
+        int smallestDir = possibleToDelete.get(0).size;
+        for (Node node : possibleToDelete) {
+            System.out.println("node of size " + node.size);
+            if (node.size < smallestDir) {
+                smallestDir = node.size;
+            }
+        }
+
+        System.out.println("The smallest directory that would free enough storage for the update is of size " + smallestDir + ".");
     }
 
     private static void adjustDirectorySizes(Node start) {
@@ -102,7 +117,7 @@ public class Main {
         System.out.println();
     }
 
-    private static Node searchTree(String name, Node start) {
+    private static Node findChildDir(String name, Node start) {
         Node currNode = start;
 
         // if we've found the node, return it
@@ -112,7 +127,7 @@ public class Main {
 
         // work down tree, recursively, searching for node
         for (int i = 0; i < currNode.children.size(); i++) {
-            Node returnVal = searchTree(name, currNode.children.get(i));
+            Node returnVal = findChildDir(name, currNode.children.get(i));
 
             // if the node has been found, we want to return that node and stop searching
             if (returnVal != null) {
@@ -121,6 +136,20 @@ public class Main {
         }
 
         return null;
+    }
+
+    private static void findPossibleDelDirs(int needed, Node start, ArrayList<Node> possibleNodes) {
+        Node currNode = start;
+
+        // if we've found a potential node, add it to array
+        if (currNode.type == nodeType.FOLDER && currNode.size >= needed) {
+            possibleNodes.add(currNode);
+        }
+
+        // work down tree, recursively, searching for nodes
+        for (int i = 0; i < currNode.children.size(); i++) {
+            findPossibleDelDirs(needed, currNode.children.get(i), possibleNodes);
+        }
     }
 
     private static void printTotal() {
