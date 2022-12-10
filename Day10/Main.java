@@ -28,6 +28,8 @@ public class Main {
 
         int sumOfStrengths = 0;
 
+        int printPos = 0;
+
         while (s.hasNextLine()) {
             String line = s.nextLine();
             String[] lineSplit = line.split(" ");
@@ -42,6 +44,20 @@ public class Main {
             }
 
             Command currComm = stack.peekFirst();
+
+            if (Math.abs(printPos - X) <= 1) {
+                System.out.print("#");
+            } else {
+                System.out.print(".");
+            }
+
+            if (clock == 40|| clock == 80 || clock == 120 || clock == 160 || clock == 200 || clock == 240) {
+                System.out.println();
+                printPos = 0;
+            } else {
+                printPos++;
+            }
+
             currComm.delay--;
 
             if (currComm.delay == 0) {
@@ -53,10 +69,5 @@ public class Main {
         }
 
         System.out.println("The sum of signal strengths is " + sumOfStrengths);
-    }
-
-    // Answer:
-    private static void partTwo(Scanner s) {
-
     }
 }
