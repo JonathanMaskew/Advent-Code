@@ -24,36 +24,35 @@ public class Main {
 
     // Answer:
     private static void partOne(Scanner s) {
-        tailPositions.add("00");
+        tailPositions.add("0,0");
 
         while (s.hasNextLine()) {
             System.out.println("(" + hXPos + ", " + hYPos + ")");
             String line = s.nextLine();
-            
             String[] lineSplit = line.split(" ");
             
             if (lineSplit[0].equals("U")) {
                 for (int i = 0; i < Integer.parseInt(lineSplit[1]); i++) {
                     hYPos++;
-                    checkAdjacency();
+                    ensureAdjacency();
                 }
                 
             } else if (lineSplit[0].equals("D")) {
                 for (int i = 0; i < Integer.parseInt(lineSplit[1]); i++) {
                     hYPos--;
-                    checkAdjacency();
+                    ensureAdjacency();
                 }
 
             } else if (lineSplit[0].equals("L")) {
                 for (int i = 0; i < Integer.parseInt(lineSplit[1]); i++) {
                     hXPos--;
-                    checkAdjacency();
+                    ensureAdjacency();
                 }
 
             } else if (lineSplit[0].equals("R")) {
                 for (int i = 0; i < Integer.parseInt(lineSplit[1]); i++) {
                     hXPos++;
-                    checkAdjacency();
+                    ensureAdjacency();
                 }
 
             }
@@ -63,7 +62,6 @@ public class Main {
             System.out.println(string);
         }
 
-        // must add one to account for starting position
         System.out.println("The tail travelled to " + tailPositions.size() + " positions.");
     }
 
@@ -72,31 +70,11 @@ public class Main {
 
     }
 
-    private static void checkAdjacency() {
+    private static void ensureAdjacency() {
         boolean movedTail = false;
         System.out.println("(" + hXPos + ", " + hYPos + ")");
 
-        if (Math.abs((hXPos - tXPos)) == 1 && Math.abs(hYPos - tYPos) > 1) {
-            System.out.println("not adjacent diagonal");
-
-            if (hXPos - tXPos > 0 && hYPos - tYPos > 0) {
-                tYPos++;
-                tXPos++;
-            } else if (hXPos - tXPos > 0 && hYPos - tYPos < 0) {
-                tYPos--;
-                tXPos++;
-            } else if (hXPos - tXPos < 0 && hYPos - tYPos > 0) {
-                tYPos--;
-                tXPos++;
-            } else if (hXPos - tXPos < 0 && hYPos - tYPos < 0) {
-                tYPos--;
-                tXPos--;
-            }
-
-            movedTail = true;
-        }
-
-        if (Math.abs((hXPos - tXPos)) > 1 && Math.abs(hYPos - tYPos) == 1) {
+        if ((Math.abs((hXPos - tXPos)) == 1 && Math.abs(hYPos - tYPos) > 1) || (Math.abs((hXPos - tXPos)) > 1 && Math.abs(hYPos - tYPos) == 1)) {
             System.out.println("not adjacent diagonal");
 
             if (hXPos - tXPos > 0 && hYPos - tYPos > 0) {
@@ -153,7 +131,7 @@ public class Main {
         }
 
         if (movedTail) {
-            String newPosition = tXPos + "" + tYPos;
+            String newPosition = tXPos + "," + tYPos;
 
             if (!tailPositions.contains(newPosition)) {
                 tailPositions.add(newPosition);
